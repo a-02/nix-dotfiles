@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./home.nix
-      <home-manager/nixos>
+      ./fonts.nix
     ];
 
   # Bootloader.
@@ -31,6 +31,10 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+  console = {
+    font = "ter-v16n";
+    packages = with pkgs; [ terminus_font ];
+  };
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
@@ -69,12 +73,6 @@
     packages = with pkgs; [];
   };
 
-  home-manager.users.nks = { pkgs, ... }: {
-    home.packages = with pkgs; [htop];
-    home.stateVersion = "23.05";
-    programs.bash.enable = true;
-  };
-
   # Enable automatic login for the user.
   services.getty.autologinUser = "nks";
 
@@ -88,6 +86,8 @@
     wget
     curl
     pkgs.neovim
+    git
+    pkgs.vscode
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
