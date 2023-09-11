@@ -85,9 +85,7 @@
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     curl
-    pkgs.neovim
     git
-    pkgs.vscode
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -109,6 +107,8 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   networking.hostName = "ceres";
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
