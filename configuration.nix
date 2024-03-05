@@ -17,6 +17,13 @@
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
+  # WHO NEEDS THE DEMO VERSION WHEN YOU GOT $$$$$
+  nixpkgs.config.packageOverrides = pkgs: {
+    renoise = pkgs.renoise.override { 
+      releasePath = /home/nks/renoise.tar.gz; 
+    };
+  };
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -86,6 +93,7 @@
     wget
     curl
     git
+    renoise
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -107,8 +115,14 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   networking.hostName = "ceres";
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 80 443 ];
+    allowedUDPPorts = [ 6066 8088 9099 ];
+  };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.trusted-users = [ "root" "nks" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
